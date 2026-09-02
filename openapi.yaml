@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Taller Docker API
+  description: API que genera una cedula aleatoria.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /obtenerCedula:
+    get:
+      summary: Obtener una cedula aleatoria
+      operationId: obtenerCedula
+      responses:
+        '200':
+          description: Cedula generada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - cedula
+                properties:
+                  cedula:
+                    type: integer
+                    format: int64
+                    minimum: 1000000000
+                    maximum: 9999999999
+                    example: 1234567890

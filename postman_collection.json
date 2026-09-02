@@ -1,0 +1,30 @@
+{
+  "info": {
+    "_postman_id": "6c8a1e3d-2c32-4e3d-a8cc-1f9a6a1c8b7f",
+    "name": "Taller Docker API",
+    "description": "Coleccion para probar la API FastAPI del proyecto Taller Docker.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Obtener cedula",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Genera una cedula aleatoria de 10 digitos. No requiere body ni parametros.",
+        "url": {
+          "raw": "{{baseUrl}}/obtenerCedula",
+          "host": ["{{baseUrl}}"],
+          "path": ["obtenerCedula"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -58,6 +58,26 @@ Respuesta `200 OK`:
 
 El valor de `cedula` cambia en cada solicitud.
 
+### Obtener un numero romano
+
+`GET /obtenerNumeroRomano`
+
+Genera un entero aleatorio entre 50 y 100, ambos incluidos, y devuelve tambien su
+representacion en numeros romanos.
+
+```powershell
+Invoke-RestMethod http://localhost:8000/obtenerNumeroRomano
+```
+
+Respuesta `200 OK`:
+
+```json
+{
+  "numero": 74,
+  "numero_romano": "LXXIV"
+}
+```
+
 ## Coleccion de Postman
 
 La coleccion lista para importar esta en [postman_collection.json](postman_collection.json).
@@ -165,4 +185,4 @@ y Swagger en `https://<nombre-del-servicio>.onrender.com/docs`.
 ## Solucion de problemas
 
 - Si el puerto `8000` esta ocupado, cambia `"8000:8000"` en `docker-compose.yml` por otro puerto, por ejemplo `"8080:8000"`, y usa `http://localhost:8080`.
-- Si modificas `requirements.txt` o `DockerFile`, vuelve a construir con `docker compose up --build`.
+- Si modificas `requirements.txt` o `Dockerfile`, vuelve a construir con `docker compose up --build`.

@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   title: Taller Docker API
-  description: API que genera una cedula aleatoria.
-  version: 1.0.0
+  description: API que genera valores aleatorios.
+  version: 1.1.0
 servers:
   - url: http://localhost:8000
 paths:
@@ -26,3 +26,26 @@ paths:
                     minimum: 1000000000
                     maximum: 9999999999
                     example: 1234567890
+  /obtenerNumeroRomano:
+    get:
+      summary: Obtener un numero romano aleatorio entre 50 y 100
+      operationId: obtenerNumeroRomano
+      responses:
+        '200':
+          description: Numero romano generado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - numero
+                  - numero_romano
+                properties:
+                  numero:
+                    type: integer
+                    minimum: 50
+                    maximum: 100
+                    example: 74
+                  numero_romano:
+                    type: string
+                    example: LXXIV

@@ -108,6 +108,60 @@ uvicorn main:app --reload
 
 Luego visita http://localhost:8000/docs.
 
+## Despliegue continuo gratuito en Render
+
+El workflow [`.github/workflows/deploy-render.yml`](.github/workflows/deploy-render.yml)
+valida la aplicacion y solicita a Render el despliegue del commit exacto cada vez que
+se hace `push` a la rama `main`. Tambien se puede ejecutar manualmente desde la
+pestana **Actions** de GitHub.
+
+### 1. Publicar el repositorio
+
+Sube el proyecto a GitHub y comprueba que la rama de produccion se llame `main`.
+
+### 2. Crear el Web Service gratuito
+
+1. Crea una cuenta en [Render](https://render.com/) e inicia sesion.
+2. Selecciona **New > Web Service**, conecta GitHub y elige este repositorio.
+3. Configura el servicio con estos valores:
+   - **Branch:** `main`
+   - **Language/Runtime:** `Python 3`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - **Health Check Path:** `/openapi.json`
+   - **Instance Type/Compute:** `Free`
+4. Crea el servicio y espera a que termine el primer despliegue.
+
+### 3. Conectar GitHub Actions con Render
+
+1. En Render, abre el servicio y entra a **Settings**.
+2. Copia su **Deploy Hook**. Esta URL es secreta y no debe guardarse en el codigo.
+3. En GitHub, abre el repositorio y entra a **Settings > Secrets and variables >
+   Actions**.
+4. Selecciona **New repository secret**.
+5. Usa el nombre `RENDER_DEPLOY_HOOK_URL`, pega como valor la URL copiada de
+   Render y guarda el secreto.
+6. En Render, desactiva **Auto-Deploy** para evitar que Render y GitHub Actions
+   inicien dos despliegues para el mismo `push`.
+
+### 4. Activar el despliegue continuo
+
+Haz commit de los cambios y subelos a `main`:
+
+```powershell
+git add .github/workflows/deploy-render.yml README.md
+git commit -m "Configurar despliegue continuo en Render"
+git push origin main
+```
+
+En GitHub, consulta **Actions > Validar y desplegar en Render**. Cuando el workflow
+finalice, la API estara disponible en la URL `https://<nombre-del-servicio>.onrender.com`
+y Swagger en `https://<nombre-del-servicio>.onrender.com/docs`.
+
+> Render apaga los servicios gratuitos despues de un periodo sin trafico. La primera
+> solicitud posterior puede tardar alrededor de un minuto mientras el servicio vuelve
+> a iniciar. El sistema de archivos local del servicio gratuito es efimero.
+
 ## Solucion de problemas
 
 - Si el puerto `8000` esta ocupado, cambia `"8000:8000"` en `docker-compose.yml` por otro puerto, por ejemplo `"8080:8000"`, y usa `http://localhost:8080`.

@@ -38,3 +38,11 @@ def obtener_numero_romano():
         "numero": numero,
         "numero_romano": convertir_a_romano(numero),
     }
+
+
+@app.get("/multiplicarPorDos")
+def multiplicar_por_dos(numero: float):
+    return {
+        "numero": numero,
+        "resultado": numero * 2,
+    }

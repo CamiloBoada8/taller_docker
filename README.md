@@ -78,6 +78,26 @@ Respuesta `200 OK`:
 }
 ```
 
+### Multiplicar un numero por dos
+
+`GET /multiplicarPorDos?numero=5`
+
+Recibe un numero mediante el parametro de consulta `numero` y devuelve el resultado
+de multiplicarlo por dos. Acepta enteros y decimales.
+
+```powershell
+Invoke-RestMethod "http://localhost:8000/multiplicarPorDos?numero=5"
+```
+
+Respuesta `200 OK`:
+
+```json
+{
+  "numero": 5.0,
+  "resultado": 10.0
+}
+```
+
 ## Coleccion de Postman
 
 La coleccion lista para importar esta en [postman_collection.json](postman_collection.json).
